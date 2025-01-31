@@ -2,7 +2,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
 import { useState } from 'react';
 
-export default function Logs() {
+export default function Logs({logs}) {
     const allDevices = [
         'D001', 'D002', 'D003', 'D004', 'D005', 'D006', 'D007', 'D008', 'D009', 'D010'
     ];
@@ -19,6 +19,8 @@ export default function Logs() {
         { deviceCode: 'D009', temperature: '36°C', voltage: '220V', phLevel: '6.9', turbidity: '1.0 NTU', conductivity: '5.4 mS/cm', date: '2025-01-29 10:40' },
         { deviceCode: 'D010', temperature: '34°C', voltage: '220V', phLevel: '7.0', turbidity: '1.2 NTU', conductivity: '5.5 mS/cm', date: '2025-01-29 10:45' },
     ];
+
+    const logData = logs.length > 0 ? logs : initialData;
 
     const [deviceFilter, setDeviceFilter] = useState('');
     const [dateFilter, setDateFilter] = useState('');
@@ -38,7 +40,7 @@ export default function Logs() {
     };
 
     const filterData = (device, date) => {
-        let filtered = initialData;
+        let filtered = logData;
 
         if (device) {
             filtered = filtered.filter((log) => log.deviceCode === device);

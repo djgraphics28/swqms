@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\DashboardController;
+use Inertia\Inertia;
+use App\Models\DeviceLog;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -21,7 +22,10 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/logs', function () {
-    return Inertia::render('Logs');
+    $logs = DeviceLog::latest()->get();
+    return Inertia::render('Logs',[
+        'logs' => $logs
+    ]);
 })->middleware(['auth', 'verified'])->name('logs');
 
 Route::middleware('auth')->group(function () {
